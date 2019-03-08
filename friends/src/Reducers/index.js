@@ -1,29 +1,40 @@
-import { FETCHING_DATA, SUCCESS, FAILURE} from "../Actions";
+import { FETCHING_DATA, FETCHING_SUCCESS, FETCHING_FAILURE, LOGIN_SUCCESS, FAILURE_LOGIN} from "../Actions";
 
 const initialState = {
     friends: [],
     fetchingFriends: false,
-    error: ''
+    loggedIn: false,
+    error: '',
   };
   
-  const reducer = (state = initialState, action) => {
+  const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCHING_DATA:
             return{
                 ...state,
                 fetchingFriends: true
             }
-        case SUCCESS: 
+        case FETCHING_SUCCESS: 
             return{
                 ...state,
-                fetching: false,
+                fetchingFriends: false,
                 friends: action.payload
             }
-        case FAILURE:
-        console.log(action.payload);
+        case FETCHING_FAILURE:
             return {
                 ...state,
                 fetchingFriends: false,
+                error: action.payload
+            }
+        case LOGIN_SUCCESS:
+                return{
+                    ...state,
+                    loggedIn: true
+                }
+        case FAILURE_LOGIN:
+            return {
+                ...state,
+                loggedIn: false,
                 error: action.payload
             }
         default:
@@ -31,5 +42,5 @@ const initialState = {
     }
   };
   
-  export default reducer;
+  export default rootReducer;
   
